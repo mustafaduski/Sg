@@ -3,13 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>NOVA PROTOCOL | mobile</title>
-  <!-- Google Fonts: Montserrat (premium) -->
+  <title>LUMIÈRE | mobile intro</title>
+  <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
   <style>
-    /* RESET + OLED BASE */
     * {
       margin: 0;
       padding: 0;
@@ -17,415 +16,401 @@
     }
 
     body {
-      background: #000000; /* true OLED */
-      font-family: 'Montserrat', sans-serif;
-      color: #fff;
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      overflow-x: hidden;
+      font-family: 'Inter', sans-serif;
+      background: #000000; /* base black */
+      height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       position: relative;
+      color: white;
     }
 
-    /* animated mesh gradient / neon pulse background */
-    .mesh-bg {
-      position: fixed;
+    /* ========== animated mesh gradient (blobs) ========== */
+    .mesh {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      filter: blur(70px);
+      opacity: 0.7;
+      animation: meshShift 18s infinite alternate ease-in-out;
+    }
+
+    .mesh span {
+      position: absolute;
+      width: 50vmax;
+      height: 50vmax;
+      border-radius: 50%;
+      mix-blend-mode: screen;
+      filter: blur(40px);
+    }
+
+    .mesh span:nth-child(1) {
+      background: #1a1a1a;
+      top: -15%;
+      left: -10%;
+      width: 80vmin;
+      height: 80vmin;
+      animation: floatBlob 22s infinite alternate;
+    }
+
+    .mesh span:nth-child(2) {
+      background: #4b0082; /* indigo */
+      bottom: -20%;
+      right: -15%;
+      width: 90vmin;
+      height: 90vmin;
+      animation: floatBlob 25s infinite alternate-reverse;
+    }
+
+    .mesh span:nth-child(3) {
+      background: #000000;
+      top: 40%;
+      left: 30%;
+      width: 70vmin;
+      height: 70vmin;
+      opacity: 0.9;
+      animation: floatBlob 20s infinite alternate;
+    }
+
+    @keyframes meshShift {
+      0% { transform: scale(1) rotate(0deg); }
+      100% { transform: scale(1.2) rotate(5deg); }
+    }
+
+    @keyframes floatBlob {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(8%, 10%) scale(1.3); }
+    }
+
+    /* ========== floating particles ========== */
+    .particles {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .particle {
+      position: absolute;
+      background: rgba(255, 255, 255, 0.3);
+      box-shadow: 0 0 20px rgba(200, 0, 255, 0.6);
+      border-radius: 50%;
+      width: 4px;
+      height: 4px;
+      opacity: 0;
+      animation: particleFloat 10s infinite ease-in-out;
+    }
+
+    /* generate many particles with random left/top/delay/size */
+    .particle:nth-child(1) { left: 15%; top: 20%; width: 8px; height: 8px; animation-delay: 0s; background: rgba(0, 255, 255, 0.4); }
+    .particle:nth-child(2) { left: 80%; top: 60%; width: 5px; height: 5px; animation-delay: 2s; background: rgba(255, 0, 255, 0.5); }
+    .particle:nth-child(3) { left: 30%; top: 85%; width: 10px; height: 10px; animation-delay: 1s; background: rgba(255, 255, 0, 0.3); }
+    .particle:nth-child(4) { left: 70%; top: 15%; width: 6px; height: 6px; animation-delay: 0.5s; }
+    .particle:nth-child(5) { left: 45%; top: 45%; width: 12px; height: 12px; animation-delay: 3s; background: rgba(0, 255, 255, 0.3); }
+    .particle:nth-child(6) { left: 90%; top: 80%; width: 7px; height: 7px; animation-delay: 1.8s; background: rgba(180, 0, 255, 0.5); }
+    .particle:nth-child(7) { left: 10%; top: 70%; width: 9px; height: 9px; animation-delay: 2.2s; }
+    .particle:nth-child(8) { left: 55%; top: 10%; width: 5px; height: 5px; animation-delay: 0.2s; background: cyan; }
+    .particle:nth-child(9) { left: 25%; top: 95%; width: 6px; height: 6px; animation-delay: 2.7s; background: magenta; }
+    .particle:nth-child(10) { left: 65%; top: 40%; width: 8px; height: 8px; animation-delay: 1.3s; }
+    .particle:nth-child(11) { left: 35%; top: 30%; width: 4px; height: 4px; animation-delay: 3.5s; }
+    .particle:nth-child(12) { left: 85%; top: 50%; width: 11px; height: 11px; animation-delay: 0.8s; background: rgba(255, 0, 150, 0.4); }
+    .particle:nth-child(13) { left: 5%; top: 45%; width: 6px; height: 6px; animation-delay: 2.9s; }
+    .particle:nth-child(14) { left: 50%; top: 75%; width: 7px; height: 7px; animation-delay: 1.1s; background: #00ffff; }
+    .particle:nth-child(15) { left: 20%; top: 60%; width: 13px; height: 13px; animation-delay: 2.4s; background: #b300ff; }
+
+    @keyframes particleFloat {
+      0% { transform: translateY(0) scale(1); opacity: 0; }
+      25% { opacity: 0.8; }
+      50% { transform: translateY(-30px) scale(1.5); opacity: 0.5; }
+      75% { opacity: 0.6; }
+      100% { transform: translateY(40px) scale(0.8); opacity: 0; }
+    }
+
+    /* ========== main content (smooth reveal) ========== */
+    .content {
+      position: absolute;
+      z-index: 2;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      z-index: 0;
-      background: #000000;
-      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 24px;
+      text-align: center;
+      backdrop-filter: blur(2px);
     }
 
-    .mesh-bg::before {
-      content: '';
-      position: absolute;
-      width: 150%;
-      height: 150%;
-      top: -25%;
-      left: -25%;
-      background: radial-gradient(circle at 30% 40%, rgba(0, 255, 255, 0.2) 0%, transparent 30%),
-                  radial-gradient(circle at 80% 70%, rgba(180, 0, 255, 0.25) 0%, transparent 35%),
-                  radial-gradient(circle at 10% 80%, rgba(0, 255, 200, 0.15) 0%, transparent 40%),
-                  repeating-linear-gradient(45deg, rgba(255, 0, 255, 0.02) 0px, rgba(0, 255, 255, 0.02) 2px, transparent 2px, transparent 8px);
-      filter: blur(40px);
-      animation: meshMove 16s infinite alternate ease-in-out;
+    /* reveal animations */
+    .reveal {
+      opacity: 0;
+      animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
     }
 
-    @keyframes meshMove {
-      0% { transform: scale(1) rotate(0deg); opacity: 0.6; }
-      50% { transform: scale(1.2) rotate(2deg); opacity: 1; }
-      100% { transform: scale(1) rotate(-2deg); opacity: 0.7; }
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+    .delay-4 { animation-delay: 0.8s; }
+
+    @keyframes fadeUp {
+      0% { opacity: 0; transform: translateY(25px); }
+      100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* second layer for depth */
-    .mesh-bg::after {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 30%, rgba(255, 0, 255, 0.15) 0%, transparent 40%),
-                  radial-gradient(circle at 90% 20%, cyan 0%, transparent 50%);
-      filter: blur(60px);
-      mix-blend-mode: screen;
-      animation: pulseGlow 10s infinite alternate;
-    }
-
-    @keyframes pulseGlow {
-      0% { opacity: 0.3; }
-      100% { opacity: 0.8; }
-    }
-
-    /* main container - mobile first (9:16 feel) */
-    .mobile-container {
-      position: relative;
-      z-index: 10;
+    /* ========== glass card ========== */
+    .glass-card {
+      background: rgba(20, 20, 30, 0.25);
+      backdrop-filter: blur(18px) saturate(200%);
+      -webkit-backdrop-filter: blur(18px) saturate(200%);
+      border-radius: 48px;
+      padding: 40px 28px;
       width: 100%;
-      max-width: 380px; /* typical mobile width */
-      margin: 0 auto;
-      padding: 20px 16px 30px;
+      max-width: 340px;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 0, 255, 0.2) inset;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
-      min-height: 100vh;
       gap: 24px;
     }
 
-    /* ===== BREATHING LOGO / PROFILE AREA ===== */
-    .profile-glowing {
-      width: 120px;
-      height: 120px;
-      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%; /* organic shape */
-      background: linear-gradient(145deg, #00ffff, #b300ff, #0000ff);
-      padding: 3px;
-      box-shadow: 0 0 40px cyan, 0 0 80px purple, inset 0 0 20px rgba(255,255,255,0.3);
-      animation: breathe 4s infinite ease-in-out, floatMorph 8s infinite alternate;
-      margin: 10px 0 5px;
-    }
-
-    .profile-inner {
-      width: 100%;
-      height: 100%;
-      border-radius: inherit;
-      background: #000000;
+    /* profile image with neon border pulse */
+    .profile {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #2a2a2a, #0a0a0a);
       display: flex;
       align-items: center;
       justify-content: center;
       font-size: 3.8rem;
+      box-shadow: 0 0 0 4px rgba(255, 0, 255, 0.3), 0 0 0 8px rgba(0, 255, 255, 0.2), 0 0 40px #ff00ff;
+      animation: neonPulse 2s infinite alternate ease-in-out;
+      position: relative;
+    }
+
+    .profile::after {
+      content: '';
+      position: absolute;
+      inset: -6px;
+      border-radius: 50%;
+      border: 2px solid transparent;
+      background: linear-gradient(145deg, #00ffff, #b300ff) border-box;
+      -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+      -webkit-mask-composite: xor;
+      mask-composite: exclude;
+      opacity: 0.8;
+      animation: borderRotate 4s linear infinite;
+    }
+
+    @keyframes neonPulse {
+      0% { box-shadow: 0 0 0 4px rgba(255, 0, 255, 0.5), 0 0 0 8px rgba(0, 255, 255, 0.3), 0 0 50px magenta; }
+      100% { box-shadow: 0 0 0 6px cyan, 0 0 0 12px rgba(255, 0, 255, 0.4), 0 0 80px cyan; }
+    }
+
+    @keyframes borderRotate {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .profile span {
+      filter: drop-shadow(0 0 15px white);
+    }
+
+    /* title with shimmer effect */
+    .title {
+      font-size: 2.8rem;
       font-weight: 800;
-      color: white;
-      text-shadow: 0 0 15px cyan, 0 0 40px purple;
-      backdrop-filter: blur(4px);
-      background-clip: text;
-    }
-
-    @keyframes breathe {
-      0% { transform: scale(1); opacity: 0.9; filter: brightness(1); }
-      50% { transform: scale(1.08); opacity: 1; filter: brightness(1.3); box-shadow: 0 0 60px #ff00ff, 0 0 100px cyan; }
-      100% { transform: scale(1); opacity: 0.9; filter: brightness(1); }
-    }
-
-    @keyframes floatMorph {
-      0% { border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%; }
-      100% { border-radius: 60% 40% 70% 30% / 40% 60% 30% 70%; }
-    }
-
-    /* ===== MASSIVE TYPOGRAPHY (outline + gradient fill) ===== */
-    .hero-text {
-      text-align: center;
-      margin: 10px 0 15px;
-      width: 100%;
-    }
-
-    .hero-text h1 {
-      font-size: clamp(3.2rem, 15vw, 5.2rem);
-      font-weight: 900;
-      line-height: 1;
-      text-transform: uppercase;
       letter-spacing: -1px;
-      /* transparent outline effect */
-      -webkit-text-stroke: 2px rgba(0, 255, 255, 0.7);
-      text-stroke: 2px rgba(0, 255, 255, 0.7);
-      color: transparent;
-      background: linear-gradient(145deg, #ff00ff, #00ffff, #ffffff);
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(135deg, #ffffff, #a0a0ff, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
-      /* fallback */
-      text-shadow: 0 0 30px rgba(255,0,255,0.5);
-      animation: scrollGradient linear both;
-      animation-timeline: scroll(); /* experimental but adds on-scroll gradient shift */
-      /* for non-support, we keep gradient anyway */
+      color: transparent;
+      position: relative;
+      overflow: hidden;
+      margin: 8px 0;
     }
 
-    /* progressive enhancement for scroll-based animation */
-    @supports (animation-timeline: scroll()) {
-      @keyframes scrollGradient {
-        0% { background-position: 0% 50%; }
-        100% { background-position: 100% 50%; }
-      }
-      .hero-text h1 {
-        background-size: 200% auto;
-        animation: scrollGradient linear both;
-        animation-timeline: scroll(root);
-      }
+    .title::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: -150%;
+      width: 200%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      transform: skewX(-20deg);
+      animation: shimmer 5s infinite;
     }
 
-    .hero-sub {
-      font-size: 0.9rem;
-      letter-spacing: 6px;
-      font-weight: 300;
-      color: rgba(255,255,255,0.6);
-      margin-top: 10px;
-      text-transform: uppercase;
-      backdrop-filter: blur(10px);
-      padding: 4px 12px;
-      border-radius: 40px;
-      display: inline-block;
-      background: rgba(0,0,0,0.3);
-      border: 1px solid rgba(0,255,255,0.2);
+    @keyframes shimmer {
+      0% { left: -150%; }
+      20% { left: 100%; }
+      100% { left: 100%; }
     }
 
-    /* ===== GLASSMORPHISM CARD WITH TILT / HOVER EFFECT ===== */
-    .glass-tilt-card {
-      width: 100%;
-      backdrop-filter: blur(18px) saturate(200%);
-      -webkit-backdrop-filter: blur(18px) saturate(200%);
-      background: rgba(0, 0, 0, 0.45);
-      border: 1px solid rgba(0, 255, 255, 0.25);
-      border-radius: 42px;
-      padding: 30px 20px;
-      margin: 20px 0 15px;
-      box-shadow: 0 25px 40px -10px rgba(180, 0, 255, 0.5), 0 0 0 1px rgba(0,255,255,0.2) inset;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      transform-style: preserve-3d;
-      transform: perspective(800px) rotateX(0deg) rotateY(0deg);
-      /* subtle tilt on hover / touch */
-    }
-
-    .glass-tilt-card:hover {
-      transform: perspective(800px) rotateX(2deg) rotateY(4deg) scale(1.02);
-      box-shadow: 0 35px 50px -8px #ff00ff, 0 0 0 2px cyan inset;
-    }
-
-    .card-content {
+    /* button group */
+    .button-group {
       display: flex;
       flex-direction: column;
-      gap: 12px;
-    }
-
-    .card-content h2 {
-      font-size: 1.8rem;
-      font-weight: 700;
-      background: linear-gradient(135deg, cyan, #ff80ff);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      letter-spacing: -0.5px;
-    }
-
-    .card-content p {
-      color: #ccc;
-      font-weight: 300;
-      line-height: 1.5;
-      font-size: 1rem;
-    }
-
-    /* magnetic buttons area */
-    .magnetic-group {
-      display: flex;
-      flex-wrap: wrap;
-      align-items: center;
-      justify-content: center;
-      gap: 18px;
-      margin: 10px 0 8px;
+      gap: 14px;
       width: 100%;
+      margin-top: 8px;
     }
 
-    /* magnetic button base */
-    .magnet-btn {
-      position: relative;
-      padding: 16px 32px;
+    /* ghost button with animated border */
+    .ghost-btn {
+      background: transparent;
+      border: 2px solid;
+      border-image-slice: 1;
       border-radius: 60px;
-      background: rgba(0, 0, 0, 0.6);
-      backdrop-filter: blur(16px);
-      border: 1.5px solid rgba(0, 255, 255, 0.5);
-      color: white;
+      padding: 16px 24px;
       font-weight: 600;
       font-size: 1.2rem;
-      letter-spacing: 1px;
-      cursor: pointer;
-      transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s;
-      box-shadow: 0 8px 20px rgba(255, 0, 255, 0.3);
-      flex: 0 1 auto;
-      min-width: 150px;
-      text-align: center;
+      color: white;
+      backdrop-filter: blur(10px);
       text-transform: uppercase;
-      transform: translate(0, 0);
-    }
-
-    /* magnetic effect: move slightly towards cursor */
-    .magnet-btn:hover {
-      transform: scale(1.08) translate(3px, -2px);
-      border-color: #b300ff;
-      box-shadow: 0 0 35px cyan, 0 0 60px purple;
-      background: rgba(20, 20, 20, 0.7);
-    }
-
-    /* secondary smaller magnetic */
-    .magnet-btn.small {
-      padding: 12px 24px;
-      font-size: 0.9rem;
-      min-width: 120px;
-      border-color: rgba(180, 0, 255, 0.6);
-    }
-
-    /* micro interaction extras */
-    .status-dot {
-      display: inline-block;
-      width: 10px;
-      height: 10px;
-      background: #00ffaa;
-      border-radius: 50%;
-      margin-right: 6px;
-      box-shadow: 0 0 15px cyan;
-      animation: pulseDot 2s infinite;
-    }
-
-    @keyframes pulseDot {
-      0% { opacity: 1; transform: scale(1); }
-      50% { opacity: 0.6; transform: scale(1.3); background: #ff00ff; }
-      100% { opacity: 1; transform: scale(1); }
-    }
-
-    /* link row with glass */
-    .link-row {
-      display: flex;
-      justify-content: center;
-      gap: 24px;
-      margin-top: 20px;
-      width: 100%;
-    }
-
-    .link-icon {
-      width: 52px;
-      height: 52px;
-      border-radius: 30px;
-      background: rgba(0,0,0,0.5);
-      backdrop-filter: blur(15px);
-      border: 1px solid rgba(0,255,255,0.3);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.8rem;
+      letter-spacing: 1.5px;
       transition: 0.2s;
-      box-shadow: 0 0 20px rgba(255,0,255,0.3);
+      animation: borderColorShift 4s infinite alternate;
+      border-color: cyan; /* fallback */
     }
 
-    .link-icon:hover {
-      transform: translateY(-6px) scale(1.1);
-      border-color: cyan;
-      box-shadow: 0 0 35px magenta;
+    @keyframes borderColorShift {
+      0% { border-color: cyan; box-shadow: 0 0 15px cyan, inset 0 0 10px cyan; }
+      50% { border-color: magenta; box-shadow: 0 0 25px magenta, inset 0 0 15px magenta; }
+      100% { border-color: #00ffaa; box-shadow: 0 0 20px #00ffaa, inset 0 0 10px #00ffaa; }
     }
 
-    /* divider premium */
-    .divider {
-      width: 40%;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, cyan, purple, transparent);
-      margin: 12px 0;
+    .ghost-btn:hover {
+      background: rgba(255, 255, 255, 0.1);
+      transform: scale(1.03);
     }
 
-    /* responsive tweaks for tiny screens */
-    @media (max-width: 340px) {
-      .magnet-btn {
-        min-width: 130px;
-        padding: 14px 16px;
-        font-size: 1rem;
-      }
-      .profile-glowing {
-        width: 100px;
-        height: 100px;
-      }
+    /* liquid fill button */
+    .liquid-btn {
+      background: none;
+      border: none;
+      border-radius: 60px;
+      padding: 16px 24px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      color: white;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      position: relative;
+      overflow: hidden;
+      z-index: 1;
+      border: 1px solid rgba(255,255,255,0.2);
+      backdrop-filter: blur(10px);
+      transition: color 0.3s;
     }
 
-    /* hide desktop overflow */
-    body {
-      overscroll-behavior: none;
+    .liquid-btn::before {
+      content: '';
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: conic-gradient(from 0deg, cyan, magenta, #ffaa00, cyan);
+      animation: liquidSpin 6s linear infinite;
+      z-index: -2;
     }
 
-    /* micro-interaction: pulse effect on tap (optional) */
-    .magnet-btn:active {
-      transform: scale(0.98);
+    .liquid-btn::after {
+      content: '';
+      position: absolute;
+      inset: 2px;
+      background: #0a0a0a;
+      border-radius: 60px;
+      z-index: -1;
+      transition: background 0.2s;
+    }
+
+    .liquid-btn:hover::after {
+      background: rgba(20,20,30,0.7);
+    }
+
+    .liquid-btn:hover {
+      color: #ffffff;
+      text-shadow: 0 0 10px cyan;
+    }
+
+    @keyframes liquidSpin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* micro text */
+    .footnote {
+      font-size: 0.7rem;
+      font-weight: 300;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 2px;
+      margin-top: 16px;
+    }
+
+    /* ensure no scroll */
+    body, html {
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
     }
   </style>
 </head>
 <body>
-  <!-- animated mesh background (pure oled + gradient) -->
-  <div class="mesh-bg"></div>
+  <!-- animated mesh blobs -->
+  <div class="mesh">
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
 
-  <!-- mobile container (9:16 friendly) -->
-  <div class="mobile-container">
-    
-    <!-- glowing profile with breathing animation -->
-    <div class="profile-glowing">
-      <div class="profile-inner">⏣</div>
-    </div>
+  <!-- floating particles -->
+  <div class="particles">
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+  </div>
 
-    <!-- massive typography (outline + gradient) with scroll effect -->
-    <div class="hero-text">
-      <h1>NOVA<br>PROTOCOL</h1>
-      <div class="hero-sub">DIGITAL EDGE</div>
-    </div>
-
-    <!-- glassmorphism tilt card (digital business card) -->
-    <div class="glass-tilt-card">
-      <div class="card-content">
-        <h2>✦ nexus one ✦</h2>
-        <p style="display: flex; gap: 8px; align-items: center;"><span class="status-dot"></span> quantum secure · link ready</p>
-        <p>⏣ 0x3F8A...D12E <span style="color:cyan; font-weight: 500;">(mainnet)</span></p>
-        <div class="divider"></div>
-        <p style="font-size: 0.95rem;">futuristic link-in-bio with magnetic touch & deep oled soul.</p>
+  <!-- main content with smooth reveal -->
+  <div class="content">
+    <div class="glass-card">
+      <!-- profile with neon border pulse (reveal 1) -->
+      <div class="profile reveal delay-1">
+        <span>✦</span>
       </div>
-    </div>
 
-    <!-- magnetic button group (premium interactions) -->
-    <div class="magnetic-group">
-      <button class="magnet-btn">enter</button>
-      <button class="magnet-btn small">discover</button>
-    </div>
+      <!-- title shimmer (reveal 2) -->
+      <h1 class="title reveal delay-2">LUMIÈRE</h1>
 
-    <!-- second row micro / social -->
-    <div class="link-row">
-      <div class="link-icon" title="github">⌨️</div>
-      <div class="link-icon" title="dribbble">✧</div>
-      <div class="link-icon" title="telegram">✈️</div>
-      <div class="link-icon" title="warp">◈</div>
-    </div>
+      <!-- buttons (reveal 3 & 4) -->
+      <div class="button-group">
+        <button class="ghost-btn reveal delay-3">enter</button>
+        <button class="liquid-btn reveal delay-4">discover</button>
+      </div>
 
-    <!-- tiny note: magnetic effect on hover + glass -->
-    <div style="color: #888; font-size: 0.7rem; letter-spacing: 1px; margin-top: 8px; backdrop-filter: blur(4px); padding: 6px 12px; border-radius: 60px; background: rgba(0,0,0,0.3); border: 1px solid rgba(255,0,255,0.2);">
-      <span style="color:cyan;">❖</span> mobile first · infinite pulse <span style="color:magenta;">❖</span>
+      <div class="footnote reveal delay-4">✦ luxury mobile interface ✦</div>
     </div>
   </div>
 
-  <!-- no JS required, but tiny magnetic move can be enhanced via css only (hover) -->
-  <!-- we already have magnetic hover effect. optional tilt uses hover -->
-  <!-- ensure that glass card feels like "follow tilt" on hover (mobile: touch triggers hover) -->
-  <!-- for better mobile experience, tap on card will show tilt effect -->
-  <script>
-    (function() {
-      // optional: on mobile devices, add a tiny random tilt on touch? but we keep css.
-      // purely aesthetic – no framework.
-      // For the "scroll gradient" we used modern CSS if supported.
-      console.log('NOVA mobile: magnetic & breathing active');
-    })();
-  </script>
-
-  <!-- add meta tag for ios -->
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <!-- (no extra script, pure CSS) -->
 </body>
 </html>

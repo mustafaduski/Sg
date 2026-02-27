@@ -1,74 +1,449 @@
 <!DOCTYPE html>
-<html lang="ku" dir="rtl">
+<html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>دیزاینێکی پڕۆفیشناڵ</title>
-    <style>
-        /* ستایلی سەرەکی */
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 100vh;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: #fff;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NEBULA X | future paradigm</title>
+  <!-- Google Fonts: Poppins + Inter (blend for fallback) -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz@14..32&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        /* کارتە سەرەکییەکە */
-        .container {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            padding: 40px;
-            width: 90%;
-            max-width: 500px;
-            text-align: center;
-            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
-            border: 1px solid rgba(255, 255, 255, 0.18);
-        }
+    body {
+      background-color: #0a0a0a;
+      font-family: 'Poppins', 'Inter', sans-serif;
+      color: #fff;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
 
-        h1 {
-            font-size: 2.5rem;
-            margin-bottom: 10px;
-        }
+    /* smooth scroll & reveal base */
+    html {
+      scroll-behavior: smooth;
+    }
 
-        p {
-            font-size: 1.1rem;
-            line-height: 1.6;
-            opacity: 0.9;
-        }
+    /* ===== GLASS & GLOBAL ===== */
+    .glass-nav, .card, .cta-button {
+      backdrop-filter: blur(14px) saturate(180%);
+      -webkit-backdrop-filter: blur(14px) saturate(180%);
+      background: rgba(10, 10, 10, 0.5);
+      border: 1px solid rgba(0, 255, 255, 0.15);
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.5);
+    }
 
-        /* دوگمەی پڕۆفیشناڵ */
-        .btn {
-            display: inline-block;
-            margin-top: 20px;
-            padding: 12px 30px;
-            background-color: #fff;
-            color: #764ba2;
-            text-decoration: none;
-            border-radius: 50px;
-            font-weight: bold;
-            transition: 0.3s;
-        }
+    /* ===== FIXED GLASS NAVBAR ===== */
+    .navbar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1rem 5%;
+      z-index: 1000;
+      backdrop-filter: blur(16px) saturate(200%);
+      -webkit-backdrop-filter: blur(16px) saturate(200%);
+      background: rgba(5, 5, 5, 0.45);
+      border-bottom: 1px solid rgba(0, 255, 255, 0.3);
+      box-shadow: 0 8px 32px rgba(0, 180, 255, 0.1);
+      transition: all 0.2s ease;
+    }
 
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-            background-color: #f0f0f0;
-        }
-    </style>
+    .logo {
+      font-size: 1.9rem;
+      font-weight: 800;
+      letter-spacing: 3px;
+      background: linear-gradient(135deg, #e0e0ff, #00ffff, #b300ff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      text-shadow: 0 0 15px cyan;
+      border-right: 2px solid rgba(255, 0, 255, 0.4);
+      padding-right: 1.5rem;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 3rem;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #f0f0ff;
+      font-size: 1.1rem;
+      transition: 0.25s;
+      border-bottom: 1px solid transparent;
+      padding-bottom: 4px;
+    }
+
+    .nav-links a:hover {
+      color: #00ffff;
+      border-bottom: 1px solid #b300ff;
+      text-shadow: 0 0 12px cyan;
+    }
+
+    /* ===== HERO SECTION (massive gradient text + unsplash bg) ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      position: relative;
+      padding: 0 1.5rem;
+      margin-top: 0;
+      /* high‑quality unsplash image (dark futuristic city/cyber) */
+      background: url('https://images.unsplash.com/photo-1541701494587-cb58502866ab?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;
+      background-attachment: fixed; /* subtle parallax effect */
+      isolation: isolate;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 30% 40%, rgba(180, 0, 255, 0.25), rgba(0, 10, 20, 0.9) 80%);
+      z-index: 1;
+      pointer-events: none;
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 3;
+      max-width: 1200px;
+    }
+
+    .hero h1 {
+      font-size: clamp(3rem, 15vw, 7rem);
+      font-weight: 800;
+      line-height: 1.1;
+      text-transform: uppercase;
+      background: linear-gradient(125deg, #ffffff 0%, #00ffff 35%, #b700ff 70%, #a0a0ff 100%);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      letter-spacing: 6px;
+      margin-bottom: 1.2rem;
+      filter: drop-shadow(0 0 25px #00c8ff);
+      animation: floatText 2.5s ease-out;
+    }
+
+    @keyframes floatText {
+      0% { opacity: 0; transform: translateY(70px) scale(0.95); }
+      100% { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    .hero-glow {
+      font-size: 1.8rem;
+      font-weight: 400;
+      color: rgba(255, 255, 255, 0.8);
+      text-shadow: 0 0 20px purple, 0 0 40px cyan;
+      backdrop-filter: blur(4px);
+      display: inline-block;
+      padding: 0.5rem 2rem;
+      border-radius: 60px;
+      background: rgba(0, 0, 0, 0.2);
+      border: 1px solid rgba(0, 255, 255, 0.2);
+      margin-top: 1rem;
+    }
+
+    /* ===== SMOOTH REVEAL (scroll animation) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: all 1s cubic-bezier(0.2, 0.9, 0.3, 1.1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== SERVICES SECTION (3D GRID) ===== */
+    .services {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 100px 2rem;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+
+    /* 3D card */
+    .card {
+      background: rgba(0, 0, 0, 0.55);
+      backdrop-filter: blur(18px);
+      border-radius: 32px;
+      padding: 2.5rem 1.8rem;
+      border: 1px solid rgba(0, 255, 255, 0.25);
+      box-shadow: 0 25px 40px -12px rgba(180, 0, 255, 0.4);
+      transition: transform 0.35s ease, box-shadow 0.4s;
+      transform-style: preserve-3d;
+      perspective: 1000px;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      color: #f0f0ff;
+      will-change: transform;
+    }
+
+    .card:hover {
+      transform: perspective(1200px) rotateX(3deg) rotateY(5deg) scale(1.03) translateY(-12px);
+      box-shadow: 0 35px 50px -10px #b300ff, 0 0 0 2px rgba(0, 255, 255, 0.4);
+      border-color: cyan;
+    }
+
+    .card h3 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      background: linear-gradient(145deg, #fff, #00ffff);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      margin-bottom: 0.25rem;
+    }
+
+    .card p {
+      color: #cccce0;
+      font-weight: 400;
+      font-size: 1.1rem;
+      line-height: 1.6;
+    }
+
+    .icon-3d {
+      font-size: 3.8rem;
+      filter: drop-shadow(0 8px 12px #b300ff);
+      margin-bottom: 0.5rem;
+    }
+
+    /* glowing hover effect for buttons */
+    .glow-btn {
+      background: transparent;
+      border: 2px solid rgba(0, 255, 255, 0.6);
+      padding: 0.8rem 2.2rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: white;
+      cursor: pointer;
+      transition: all 0.25s ease;
+      backdrop-filter: blur(10px);
+      margin-top: 1.2rem;
+      align-self: flex-start;
+      box-shadow: 0 0 15px rgba(0, 255, 255, 0.3);
+      text-transform: uppercase;
+    }
+
+    .glow-btn:hover {
+      background: rgba(0, 255, 255, 0.15);
+      border-color: #b300ff;
+      box-shadow: 0 0 30px cyan, 0 0 60px purple;
+      transform: scale(1.05);
+      letter-spacing: 1.5px;
+    }
+
+    /* additional scroll reveal elements */
+    .services-title {
+      text-align: center;
+      font-size: 3.2rem;
+      margin: 2rem 0 -3rem 0;
+      background: linear-gradient(135deg, cyan, purple);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      font-weight: 700;
+      text-transform: uppercase;
+    }
+
+    /* ===== responsive grid (media queries) ===== */
+    @media screen and (max-width: 950px) {
+      .services {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 1.8rem;
+        padding: 80px 1.5rem;
+      }
+      .navbar {
+        padding: 1rem 3%;
+      }
+      .logo {
+        font-size: 1.6rem;
+      }
+    }
+
+    @media screen and (max-width: 650px) {
+      .services {
+        grid-template-columns: 1fr;
+        max-width: 450px;
+        margin: 0 auto;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        font-size: 0.9rem;
+      }
+      .hero h1 {
+        letter-spacing: 2px;
+      }
+      .hero-glow {
+        font-size: 1.2rem;
+      }
+    }
+
+    /* small screens nav */
+    @media screen and (max-width: 480px) {
+      .navbar {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+      }
+      .logo {
+        border-right: none;
+        padding-right: 0;
+      }
+      .nav-links {
+        gap: 1.2rem;
+        flex-wrap: wrap;
+        justify-content: center;
+      }
+    }
+
+    /* footer / extra */
+    .footer-note {
+      text-align: center;
+      padding: 3rem;
+      color: #aaa;
+      backdrop-filter: blur(8px);
+      background: rgba(0, 0, 0, 0.3);
+      border-top: 1px solid rgba(0, 255, 255, 0.15);
+      font-weight: 300;
+    }
+
+    /* reveal on scroll using simple intersection observer (via class toggle) */
+    /* we'll add a tiny script inside html */
+  </style>
 </head>
 <body>
-
-    <div class="container">
-        <h1>بەخێربێیت</h1>
-        <p>ئەمە نموونەی دیزاینێکی مۆدێرن و پڕۆفیشناڵە کە بە بەکارهێنانی HTML و CSS دروستکراوە. تۆ دەتوانیت ئەم کۆدە بەکاربهێنیت بۆ هەر پڕۆژەیەکی وێب.</p>
-        <a href="#" class="btn">زیاتر بخوێنەوە</a>
+  <!-- fixed glass navbar -->
+  <nav class="navbar">
+    <div class="logo">✦ NEBULA X</div>
+    <div class="nav-links">
+      <a href="#">HOME</a>
+      <a href="#">SERVICES</a>
+      <a href="#">TECH</a>
+      <a href="#">CONTACT</a>
     </div>
+  </nav>
 
+  <!-- hero with massive gradient + unsplash -->
+  <section class="hero">
+    <div class="hero-content">
+      <h1>SHAPE<br> TOMORROW</h1>
+      <div class="hero-glow">✦ infinite depth · cyber frontier ✦</div>
+    </div>
+  </section>
+
+  <!-- section title with glassmorphism -->
+  <h2 class="services-title reveal">QUANTUM SERVICES</h2>
+
+  <!-- 3D services grid (3 columns) -->
+  <section class="services">
+    <div class="card reveal">
+      <span class="icon-3d">🌌</span>
+      <h3>Neural Core</h3>
+      <p>Adaptive AI with deep cybernetic integration. Real‑time data sculpting using quantum inference.</p>
+      <button class="glow-btn">engage</button>
+    </div>
+    <div class="card reveal">
+      <span class="icon-3d">⚡</span>
+      <h3>Hyperion Grid</h3>
+      <p>Distributed edge computing backed by purple‑cyan fusion. 0‑latency global mesh.</p>
+      <button class="glow-btn">ignite</button>
+    </div>
+    <div class="card reveal">
+      <span class="icon-3d">🧬</span>
+      <h3>Void Forge</h3>
+      <p>Generative design & matter prototyping inside synthetic dimensions. Full immersion lab.</p>
+      <button class="glow-btn">evolve</button>
+    </div>
+  </section>
+
+  <!-- additional subtle block to show scroll reveal more -->
+  <div style="max-width: 1100px; margin: 2rem auto; padding: 2rem; text-align: center;">
+    <p class="reveal" style="font-size: 1.5rem; backdrop-filter: blur(5px); background: rgba(0,0,0,0.3); border-radius: 60px; padding: 2rem; border:1px solid rgba(255,0,255,0.2);">
+      ⚡ "where glass meets infinity — <span style="color:#00ffff;">midnight gradients</span> and <span style="color:#b300ff;">royal purple</span> aura" ⚡
+    </p>
+  </div>
+
+  <footer class="footer-note">
+    <span>© 3026 NEBULA X — designed with insane quality</span>
+  </footer>
+
+  <!-- scroll reveal observer (small but smooth) -->
+  <script>
+    (function() {
+      // Intersection Observer for .reveal elements
+      const reveals = document.querySelectorAll('.reveal');
+      
+      if (reveals.length > 0) {
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('active');
+              // optional: keep visible after reveal (no remove)
+            }
+          });
+        }, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" }); 
+
+        reveals.forEach(el => observer.observe(el));
+      }
+
+      // manually trigger for any element already visible (on load)
+      window.addEventListener('load', () => {
+        reveals.forEach(el => {
+          const rect = el.getBoundingClientRect();
+          if (rect.top < window.innerHeight - 100) {
+            el.classList.add('active');
+          }
+        });
+      });
+
+      // additional minor hover glass effect for navbar (already glass)
+    })();
+  </script>
+
+  <!-- inline style to ensure active class transition works -->
+  <style>
+    /* guarantee active opacity */
+    .reveal.active {
+      opacity: 1 !important;
+      transform: translateY(0) !important;
+    }
+    /* just a little extension for purple accents */
+    .card:nth-child(2) .icon-3d {
+      filter: drop-shadow(0 0 20px cyan) drop-shadow(0 0 30px purple);
+    }
+    /* background depth */
+    body {
+      background-image: radial-gradient(circle at 70% 30%, rgba(128, 0, 255, 0.08) 0%, transparent 30%),
+                        radial-gradient(circle at 20% 80%, rgba(0, 255, 255, 0.05) 0%, transparent 35%);
+    }
+    /* custom scrollbar (premium touch) */
+    ::-webkit-scrollbar {
+      width: 10px;
+      background: #0a0a0a;
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(145deg, #00ffff, #b300ff);
+      border-radius: 10px;
+      border: 1px solid #0a0a0a;
+    }
+  </style>
 </body>
 </html>

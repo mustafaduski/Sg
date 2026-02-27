@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>LUMIÈRE | mobile intro</title>
+  <title>LUMIÈRE · enhanced</title>
   <!-- Google Fonts: Inter -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -17,7 +17,7 @@
 
     body {
       font-family: 'Inter', sans-serif;
-      background: #000000; /* base black */
+      background: #000000;
       height: 100vh;
       width: 100vw;
       overflow: hidden;
@@ -25,64 +25,113 @@
       color: white;
     }
 
-    /* ========== animated mesh gradient (blobs) ========== */
+    /* ========== ENHANCED MESH BACKGROUND (more complex keyframes) ========== */
     .mesh {
       position: absolute;
       inset: 0;
       z-index: 0;
-      filter: blur(70px);
-      opacity: 0.7;
-      animation: meshShift 18s infinite alternate ease-in-out;
+      filter: blur(80px);
+      opacity: 0.8;
+      animation: complexMesh 24s infinite alternate cubic-bezier(0.45, 0.05, 0.2, 0.99);
     }
 
     .mesh span {
       position: absolute;
-      width: 50vmax;
-      height: 50vmax;
+      width: 60vmax;
+      height: 60vmax;
       border-radius: 50%;
       mix-blend-mode: screen;
-      filter: blur(40px);
+      filter: blur(50px);
     }
 
     .mesh span:nth-child(1) {
       background: #1a1a1a;
-      top: -15%;
-      left: -10%;
-      width: 80vmin;
-      height: 80vmin;
-      animation: floatBlob 22s infinite alternate;
+      top: -20%;
+      left: -15%;
+      width: 100vmin;
+      height: 100vmin;
+      animation: driftBlob 28s infinite alternate ease-in-out, scalePulse 14s infinite alternate;
     }
 
     .mesh span:nth-child(2) {
-      background: #4b0082; /* indigo */
-      bottom: -20%;
-      right: -15%;
-      width: 90vmin;
-      height: 90vmin;
-      animation: floatBlob 25s infinite alternate-reverse;
+      background: #4b0082;
+      bottom: -30%;
+      right: -20%;
+      width: 110vmin;
+      height: 110vmin;
+      animation: driftBlob2 32s infinite alternate-reverse ease-in-out, scalePulse2 18s infinite alternate;
     }
 
     .mesh span:nth-child(3) {
       background: #000000;
-      top: 40%;
-      left: 30%;
+      top: 30%;
+      left: 25%;
+      width: 90vmin;
+      height: 90vmin;
+      opacity: 0.9;
+      animation: driftBlob3 26s infinite alternate ease-in, rotateSlow 20s infinite linear;
+    }
+
+    /* additional fourth blob for complexity */
+    .mesh span:nth-child(4) {
+      background: #00c8ff;
+      top: 60%;
+      left: 60%;
       width: 70vmin;
       height: 70vmin;
-      opacity: 0.9;
-      animation: floatBlob 20s infinite alternate;
+      opacity: 0.3;
+      animation: driftBlob4 30s infinite alternate, scalePulse3 12s infinite alternate;
     }
 
-    @keyframes meshShift {
-      0% { transform: scale(1) rotate(0deg); }
-      100% { transform: scale(1.2) rotate(5deg); }
+    @keyframes complexMesh {
+      0% { transform: scale(1) rotate(0deg) skew(0deg); }
+      25% { transform: scale(1.1) rotate(2deg) skew(1deg); }
+      50% { transform: scale(0.95) rotate(-3deg) skew(-1deg); }
+      75% { transform: scale(1.2) rotate(4deg) skew(2deg); }
+      100% { transform: scale(1) rotate(0deg) skew(0deg); }
     }
 
-    @keyframes floatBlob {
+    @keyframes driftBlob {
       0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(8%, 10%) scale(1.3); }
+      100% { transform: translate(12%, -8%) scale(1.4); }
     }
 
-    /* ========== floating particles ========== */
+    @keyframes driftBlob2 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-10%, 15%) scale(1.5); }
+    }
+
+    @keyframes driftBlob3 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(8%, -12%) scale(1.3); }
+    }
+
+    @keyframes driftBlob4 {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(-15%, 5%) scale(1.6); }
+    }
+
+    @keyframes scalePulse {
+      0% { opacity: 0.6; }
+      100% { opacity: 1; }
+    }
+
+    @keyframes scalePulse2 {
+      0% { opacity: 0.5; }
+      100% { opacity: 0.9; }
+    }
+
+    @keyframes scalePulse3 {
+      0% { opacity: 0.2; }
+      100% { opacity: 0.5; }
+    }
+
+    @keyframes rotateSlow {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* ========== FLOATING PARTICLES (more complex) ========== */
     .particles {
       position: absolute;
       inset: 0;
@@ -92,41 +141,53 @@
 
     .particle {
       position: absolute;
-      background: rgba(255, 255, 255, 0.3);
-      box-shadow: 0 0 20px rgba(200, 0, 255, 0.6);
+      background: rgba(255, 255, 255, 0.4);
+      box-shadow: 0 0 20px rgba(150, 0, 255, 0.8), 0 0 40px cyan;
       border-radius: 50%;
       width: 4px;
       height: 4px;
       opacity: 0;
-      animation: particleFloat 10s infinite ease-in-out;
+      animation: complexFloat 18s infinite ease-in-out;
     }
 
-    /* generate many particles with random left/top/delay/size */
-    .particle:nth-child(1) { left: 15%; top: 20%; width: 8px; height: 8px; animation-delay: 0s; background: rgba(0, 255, 255, 0.4); }
-    .particle:nth-child(2) { left: 80%; top: 60%; width: 5px; height: 5px; animation-delay: 2s; background: rgba(255, 0, 255, 0.5); }
-    .particle:nth-child(3) { left: 30%; top: 85%; width: 10px; height: 10px; animation-delay: 1s; background: rgba(255, 255, 0, 0.3); }
-    .particle:nth-child(4) { left: 70%; top: 15%; width: 6px; height: 6px; animation-delay: 0.5s; }
-    .particle:nth-child(5) { left: 45%; top: 45%; width: 12px; height: 12px; animation-delay: 3s; background: rgba(0, 255, 255, 0.3); }
-    .particle:nth-child(6) { left: 90%; top: 80%; width: 7px; height: 7px; animation-delay: 1.8s; background: rgba(180, 0, 255, 0.5); }
-    .particle:nth-child(7) { left: 10%; top: 70%; width: 9px; height: 9px; animation-delay: 2.2s; }
-    .particle:nth-child(8) { left: 55%; top: 10%; width: 5px; height: 5px; animation-delay: 0.2s; background: cyan; }
-    .particle:nth-child(9) { left: 25%; top: 95%; width: 6px; height: 6px; animation-delay: 2.7s; background: magenta; }
-    .particle:nth-child(10) { left: 65%; top: 40%; width: 8px; height: 8px; animation-delay: 1.3s; }
-    .particle:nth-child(11) { left: 35%; top: 30%; width: 4px; height: 4px; animation-delay: 3.5s; }
-    .particle:nth-child(12) { left: 85%; top: 50%; width: 11px; height: 11px; animation-delay: 0.8s; background: rgba(255, 0, 150, 0.4); }
-    .particle:nth-child(13) { left: 5%; top: 45%; width: 6px; height: 6px; animation-delay: 2.9s; }
-    .particle:nth-child(14) { left: 50%; top: 75%; width: 7px; height: 7px; animation-delay: 1.1s; background: #00ffff; }
-    .particle:nth-child(15) { left: 20%; top: 60%; width: 13px; height: 13px; animation-delay: 2.4s; background: #b300ff; }
+    /* 25 particles with varied delays, sizes, colors */
+    .particle:nth-child(1) { left: 10%; top: 15%; width: 10px; height: 10px; animation-delay: 0s; background: rgba(0, 255, 255, 0.5); }
+    .particle:nth-child(2) { left: 85%; top: 70%; width: 6px; height: 6px; animation-delay: 2.3s; background: rgba(255, 0, 255, 0.6); }
+    .particle:nth-child(3) { left: 25%; top: 80%; width: 14px; height: 14px; animation-delay: 1.2s; background: rgba(255, 255, 0, 0.3); }
+    .particle:nth-child(4) { left: 70%; top: 20%; width: 5px; height: 5px; animation-delay: 0.7s; background: cyan; }
+    .particle:nth-child(5) { left: 40%; top: 45%; width: 12px; height: 12px; animation-delay: 3.1s; background: rgba(180, 0, 255, 0.5); }
+    .particle:nth-child(6) { left: 90%; top: 85%; width: 7px; height: 7px; animation-delay: 1.9s; background: magenta; }
+    .particle:nth-child(7) { left: 15%; top: 65%; width: 9px; height: 9px; animation-delay: 2.7s; background: #00ffff; }
+    .particle:nth-child(8) { left: 55%; top: 12%; width: 5px; height: 5px; animation-delay: 0.3s; background: white; }
+    .particle:nth-child(9) { left: 30%; top: 92%; width: 11px; height: 11px; animation-delay: 2.1s; background: #ff66ff; }
+    .particle:nth-child(10) { left: 65%; top: 50%; width: 8px; height: 8px; animation-delay: 1.5s; background: cyan; }
+    .particle:nth-child(11) { left: 20%; top: 30%; width: 6px; height: 6px; animation-delay: 3.4s; }
+    .particle:nth-child(12) { left: 80%; top: 40%; width: 13px; height: 13px; animation-delay: 0.9s; background: #b300ff; }
+    .particle:nth-child(13) { left: 45%; top: 70%; width: 7px; height: 7px; animation-delay: 2.5s; }
+    .particle:nth-child(14) { left: 5%; top: 50%; width: 10px; height: 10px; animation-delay: 1.1s; background: cyan; }
+    .particle:nth-child(15) { left: 95%; top: 10%; width: 5px; height: 5px; animation-delay: 2.9s; background: magenta; }
+    .particle:nth-child(16) { left: 35%; top: 25%; width: 8px; height: 8px; animation-delay: 0.2s; }
+    .particle:nth-child(17) { left: 60%; top: 90%; width: 12px; height: 12px; animation-delay: 3.7s; background: #ff00aa; }
+    .particle:nth-child(18) { left: 75%; top: 60%; width: 6px; height: 6px; animation-delay: 1.8s; }
+    .particle:nth-child(19) { left: 50%; top: 35%; width: 9px; height: 9px; animation-delay: 0.5s; background: cyan; }
+    .particle:nth-child(20) { left: 12%; top: 85%; width: 7px; height: 7px; animation-delay: 2.2s; background: purple; }
+    .particle:nth-child(21) { left: 82%; top: 75%; width: 11px; height: 11px; animation-delay: 1.4s; }
+    .particle:nth-child(22) { left: 28%; top: 55%; width: 5px; height: 5px; animation-delay: 3.0s; background: #00ffcc; }
+    .particle:nth-child(23) { left: 68%; top: 30%; width: 10px; height: 10px; animation-delay: 0.8s; }
+    .particle:nth-child(24) { left: 42%; top: 8%; width: 13px; height: 13px; animation-delay: 2.4s; background: #ff66cc; }
+    .particle:nth-child(25) { left: 88%; top: 95%; width: 6px; height: 6px; animation-delay: 1.6s; background: cyan; }
 
-    @keyframes particleFloat {
-      0% { transform: translateY(0) scale(1); opacity: 0; }
-      25% { opacity: 0.8; }
-      50% { transform: translateY(-30px) scale(1.5); opacity: 0.5; }
-      75% { opacity: 0.6; }
-      100% { transform: translateY(40px) scale(0.8); opacity: 0; }
+    @keyframes complexFloat {
+      0% { transform: translateY(0) translateX(0) scale(1); opacity: 0; }
+      10% { opacity: 0.9; }
+      25% { transform: translateY(-40px) translateX(20px) scale(1.8); opacity: 0.7; }
+      50% { transform: translateY(30px) translateX(-30px) scale(1.2); opacity: 0.8; }
+      75% { transform: translateY(-20px) translateX(25px) scale(1.5); opacity: 0.5; }
+      90% { opacity: 0.3; }
+      100% { transform: translateY(50px) translateX(-10px) scale(0.8); opacity: 0; }
     }
 
-    /* ========== main content (smooth reveal) ========== */
+    /* ========== MAIN CONTENT ========== */
     .content {
       position: absolute;
       z-index: 2;
@@ -140,10 +201,9 @@
       align-items: center;
       padding: 24px;
       text-align: center;
-      backdrop-filter: blur(2px);
+      backdrop-filter: blur(3px);
     }
 
-    /* reveal animations */
     .reveal {
       opacity: 0;
       animation: fadeUp 0.8s cubic-bezier(0.2, 0.9, 0.3, 1) forwards;
@@ -159,55 +219,88 @@
       100% { opacity: 1; transform: translateY(0); }
     }
 
-    /* ========== glass card ========== */
+    /* ========== GLASS CARD (hyper-realistic with multiple box-shadows) ========== */
     .glass-card {
-      background: rgba(20, 20, 30, 0.25);
-      backdrop-filter: blur(18px) saturate(200%);
-      -webkit-backdrop-filter: blur(18px) saturate(200%);
-      border-radius: 48px;
-      padding: 40px 28px;
+      background: rgba(20, 20, 30, 0.2);
+      backdrop-filter: blur(20px) saturate(200%);
+      -webkit-backdrop-filter: blur(20px) saturate(200%);
+      border-radius: 56px;
+      padding: 44px 32px;
       width: 100%;
-      max-width: 340px;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 25px 60px -10px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 0, 255, 0.2) inset;
+      max-width: 360px;
+      border: 1px solid rgba(255, 255, 255, 0.1);
+      /* multiple box-shadows for realistic depth */
+      box-shadow: 
+        0 30px 60px -15px rgba(0, 0, 0, 0.8),
+        0 0 0 1px rgba(255, 0, 255, 0.15) inset,
+        0 0 0 2px rgba(0, 255, 255, 0.1) inset,
+        0 20px 40px -10px rgba(0, 255, 255, 0.3),
+        0 -10px 30px -10px rgba(180, 0, 255, 0.3),
+        0 40px 70px -20px rgba(255, 255, 255, 0.2),
+        /* inner glow for depth */
+        inset 0 -5px 20px rgba(255, 255, 255, 0.1),
+        inset 0 5px 15px rgba(0, 0, 0, 0.3),
+        /* colorful outer glows */
+        0 0 30px rgba(0, 255, 255, 0.2),
+        0 0 60px rgba(180, 0, 255, 0.2);
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 24px;
+      gap: 28px;
+      transition: box-shadow 0.3s ease;
     }
 
-    /* profile image with neon border pulse */
+    .glass-card:hover {
+      box-shadow: 
+        0 40px 80px -15px black,
+        0 0 0 1px rgba(255, 0, 255, 0.3) inset,
+        0 0 0 2px rgba(0, 255, 255, 0.2) inset,
+        0 25px 50px -5px cyan,
+        0 -15px 40px -8px magenta,
+        0 50px 90px -20px white,
+        inset 0 -8px 25px rgba(255, 255, 255, 0.15),
+        inset 0 8px 20px rgba(0, 0, 0, 0.4),
+        0 0 50px cyan,
+        0 0 80px magenta;
+    }
+
+    /* profile image with enhanced neon border pulse */
     .profile {
-      width: 110px;
-      height: 110px;
+      width: 120px;
+      height: 120px;
       border-radius: 50%;
       background: linear-gradient(145deg, #2a2a2a, #0a0a0a);
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 3.8rem;
-      box-shadow: 0 0 0 4px rgba(255, 0, 255, 0.3), 0 0 0 8px rgba(0, 255, 255, 0.2), 0 0 40px #ff00ff;
-      animation: neonPulse 2s infinite alternate ease-in-out;
+      font-size: 4rem;
+      box-shadow: 
+        0 0 0 4px rgba(255, 0, 255, 0.4),
+        0 0 0 8px rgba(0, 255, 255, 0.3),
+        0 0 30px #ff00ff,
+        0 0 60px cyan,
+        inset 0 0 20px rgba(255,255,255,0.3);
+      animation: neonPulse 2.4s infinite alternate ease-in-out;
       position: relative;
     }
 
     .profile::after {
       content: '';
       position: absolute;
-      inset: -6px;
+      inset: -8px;
       border-radius: 50%;
       border: 2px solid transparent;
-      background: linear-gradient(145deg, #00ffff, #b300ff) border-box;
+      background: linear-gradient(145deg, #00ffff, #b300ff, #ff00ff) border-box;
       -webkit-mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
       -webkit-mask-composite: xor;
       mask-composite: exclude;
-      opacity: 0.8;
-      animation: borderRotate 4s linear infinite;
+      opacity: 0.9;
+      animation: borderRotate 5s linear infinite;
     }
 
     @keyframes neonPulse {
-      0% { box-shadow: 0 0 0 4px rgba(255, 0, 255, 0.5), 0 0 0 8px rgba(0, 255, 255, 0.3), 0 0 50px magenta; }
-      100% { box-shadow: 0 0 0 6px cyan, 0 0 0 12px rgba(255, 0, 255, 0.4), 0 0 80px cyan; }
+      0% { box-shadow: 0 0 0 4px rgba(255, 0, 255, 0.6), 0 0 0 8px rgba(0, 255, 255, 0.4), 0 0 40px magenta, 0 0 80px cyan; }
+      100% { box-shadow: 0 0 0 6px cyan, 0 0 0 12px rgba(255, 0, 255, 0.5), 0 0 70px cyan, 0 0 120px magenta; }
     }
 
     @keyframes borderRotate {
@@ -216,23 +309,23 @@
     }
 
     .profile span {
-      filter: drop-shadow(0 0 15px white);
+      filter: drop-shadow(0 0 20px white);
     }
 
-    /* title with shimmer effect */
+    /* title shimmer (unchanged but fits) */
     .title {
-      font-size: 2.8rem;
+      font-size: 3rem;
       font-weight: 800;
       letter-spacing: -1px;
       line-height: 1.1;
       text-transform: uppercase;
-      background: linear-gradient(135deg, #ffffff, #a0a0ff, #ffffff);
+      background: linear-gradient(135deg, #ffffff, #c0c0ff, #ffffff);
       -webkit-background-clip: text;
       background-clip: text;
       color: transparent;
       position: relative;
       overflow: hidden;
-      margin: 8px 0;
+      margin: 4px 0;
     }
 
     .title::after {
@@ -242,7 +335,7 @@
       left: -150%;
       width: 200%;
       height: 100%;
-      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.6), transparent);
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.7), transparent);
       transform: skewX(-20deg);
       animation: shimmer 5s infinite;
     }
@@ -253,7 +346,7 @@
       100% { left: 100%; }
     }
 
-    /* button group */
+    /* buttons */
     .button-group {
       display: flex;
       flex-direction: column;
@@ -262,7 +355,6 @@
       margin-top: 8px;
     }
 
-    /* ghost button with animated border */
     .ghost-btn {
       background: transparent;
       border: 2px solid;
@@ -277,7 +369,7 @@
       letter-spacing: 1.5px;
       transition: 0.2s;
       animation: borderColorShift 4s infinite alternate;
-      border-color: cyan; /* fallback */
+      border-color: cyan;
     }
 
     @keyframes borderColorShift {
@@ -291,7 +383,6 @@
       transform: scale(1.03);
     }
 
-    /* liquid fill button */
     .liquid-btn {
       background: none;
       border: none;
@@ -346,7 +437,6 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* micro text */
     .footnote {
       font-size: 0.7rem;
       font-weight: 300;
@@ -355,7 +445,7 @@
       margin-top: 16px;
     }
 
-    /* ensure no scroll */
+    /* no scroll */
     body, html {
       height: 100%;
       width: 100%;
@@ -364,14 +454,15 @@
   </style>
 </head>
 <body>
-  <!-- animated mesh blobs -->
+  <!-- enhanced mesh background (now with 4 blobs) -->
   <div class="mesh">
     <span></span>
     <span></span>
     <span></span>
+    <span></span> <!-- extra blob -->
   </div>
 
-  <!-- floating particles -->
+  <!-- floating particles (now 25) -->
   <div class="particles">
     <div class="particle"></div>
     <div class="particle"></div>
@@ -388,29 +479,34 @@
     <div class="particle"></div>
     <div class="particle"></div>
     <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
   </div>
 
-  <!-- main content with smooth reveal -->
+  <!-- main content -->
   <div class="content">
     <div class="glass-card">
-      <!-- profile with neon border pulse (reveal 1) -->
       <div class="profile reveal delay-1">
         <span>✦</span>
       </div>
 
-      <!-- title shimmer (reveal 2) -->
       <h1 class="title reveal delay-2">LUMIÈRE</h1>
 
-      <!-- buttons (reveal 3 & 4) -->
       <div class="button-group">
         <button class="ghost-btn reveal delay-3">enter</button>
         <button class="liquid-btn reveal delay-4">discover</button>
       </div>
 
-      <div class="footnote reveal delay-4">✦ luxury mobile interface ✦</div>
+      <div class="footnote reveal delay-4">✦ infinite depth ✦</div>
     </div>
   </div>
-
-  <!-- (no extra script, pure CSS) -->
 </body>
 </html>

@@ -1,562 +1,429 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-  <title>DIGITAL SINGULARITY · surreal mobile intro</title>
-  <style>
-    /* ------------------------------
-    # RESET & GLOBAL VARIABLES
-    ------------------------------ */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    :root {
-      /* color palette – deep cosmic */
-      --void: #000000;
-      --singularity-1: #00ffff;
-      --singularity-2: #ff00ff;
-      --singularity-3: #ffff00;
-      --singularity-4: #aa80ff;
-      --glow-core: 0 0 50px rgba(0, 255, 255, 0.8), 0 0 100px rgba(255, 0, 255, 0.5);
-      --warp-speed: 20s;
-    }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background: var(--void);
-      height: 100vh;
-      width: 100vw;
-      overflow: hidden;
-      color: white;
-      position: relative;
-    }
-
-    /* ------------------------------
-    # 4D SPACE-TIME WARP BACKGROUND
-    # (complex radial + conic gradients with infinite morphing)
-    ------------------------------ */
-    .warp-field {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-      pointer-events: none;
-      animation: warpMorph 30s infinite alternate cubic-bezier(0.68, -0.55, 0.27, 1.55);
-    }
-
-    /* layer 1 – deep radial pulsar */
-    .warp-layer-1 {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 30% 40%, 
-        rgba(255, 0, 255, 0.3) 0%, 
-        rgba(0, 255, 255, 0.2) 30%, 
-        transparent 60%);
-      mix-blend-mode: screen;
-      animation: warpShift1 18s infinite alternate cubic-bezier(0.25, 0.1, 0.25, 1);
-    }
-
-    .warp-layer-2 {
-      position: absolute;
-      inset: 0;
-      background: conic-gradient(from 0deg at 50% 50%, 
-        cyan, magenta, yellow, cyan);
-      opacity: 0.2;
-      mix-blend-mode: overlay;
-      animation: warpSpin 16s linear infinite, warpPulse 8s infinite alternate;
-    }
-
-    .warp-layer-3 {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(ellipse at 70% 60%, 
-        rgba(255, 255, 255, 0.4) 0%, 
-        rgba(128, 0, 255, 0.3) 40%, 
-        transparent 70%);
-      mix-blend-mode: screen;
-      animation: warpShift2 22s infinite alternate cubic-bezier(0.45, 0.05, 0.2, 0.99);
-    }
-
-    .warp-layer-4 {
-      position: absolute;
-      inset: 0;
-      background: repeating-conic-gradient(from 0deg, 
-        #00ffff 0deg 10deg, 
-        #ff00ff 10deg 20deg, 
-        transparent 20deg 30deg);
-      opacity: 0.15;
-      mix-blend-mode: exclusion;
-      animation: warpRotate 14s linear infinite;
-    }
-
-    .warp-layer-5 {
-      position: absolute;
-      inset: 0;
-      background: radial-gradient(circle at 20% 80%, 
-        rgba(255, 255, 0, 0.3) 0%, 
-        rgba(255, 0, 255, 0.2) 50%, 
-        transparent 80%);
-      mix-blend-mode: lighten;
-      animation: warpShift3 26s infinite alternate;
-    }
-
-    /* keyframes for organic morphing */
-    @keyframes warpMorph {
-      0% { transform: scale(1) rotate(0deg) skew(0deg); filter: blur(0px); }
-      50% { transform: scale(1.2) rotate(2deg) skew(2deg); filter: blur(5px); }
-      100% { transform: scale(0.9) rotate(-3deg) skew(-2deg); filter: blur(0px); }
-    }
-
-    @keyframes warpShift1 {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 30% 40%; }
-    }
-
-    @keyframes warpShift2 {
-      0% { background-position: 0% 0%; }
-      100% { background-position: -20% 30%; }
-    }
-
-    @keyframes warpShift3 {
-      0% { background-position: 0% 0%; }
-      100% { background-position: 40% -20%; }
-    }
-
-    @keyframes warpSpin {
-      0% { transform: rotate(0deg); }
-      100% { transform: rotate(360deg); }
-    }
-
-    @keyframes warpPulse {
-      0% { opacity: 0.1; }
-      100% { opacity: 0.3; }
-    }
-
-    @keyframes warpRotate {
-      0% { transform: rotate(0deg) scale(1); }
-      50% { transform: rotate(180deg) scale(1.2); }
-      100% { transform: rotate(360deg) scale(1); }
-    }
-
-    /* ------------------------------
-    # IMPOSSIBLE OBJECT – SACRED GEOMETRY POLYHEDRON
-    # (3D rotating chrome liquid shape, pure CSS)
-    ------------------------------ */
-    .geometry-container {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      z-index: 10;
-      transform-style: preserve-3d;
-      animation: polyhedronRotate 24s infinite linear;
-    }
-
-    /* we build a star tetrahedron / merkaba style using 8 triangles */
-    .face {
-      position: absolute;
-      width: 0;
-      height: 0;
-      border-left: 100px solid transparent;
-      border-right: 100px solid transparent;
-      border-bottom: 173px solid; /* height = 100 * sqrt(3) ≈ 173 */
-      transform-origin: 50% 0%;
-      opacity: 0.7;
-      filter: blur(2px) drop-shadow(0 0 20px rgba(0,255,255,0.5));
-      mix-blend-mode: overlay;
-    }
-
-    .face1 {
-      border-bottom-color: rgba(0, 255, 255, 0.8);
-      transform: rotateY(0deg) rotateX(30deg) translateZ(86px);
-      animation: liquidChrome 6s infinite alternate;
-    }
-    .face2 {
-      border-bottom-color: rgba(255, 0, 255, 0.8);
-      transform: rotateY(120deg) rotateX(30deg) translateZ(86px);
-      animation: liquidChrome 7s infinite alternate-reverse;
-    }
-    .face3 {
-      border-bottom-color: rgba(255, 255, 0, 0.8);
-      transform: rotateY(240deg) rotateX(30deg) translateZ(86px);
-      animation: liquidChrome 8s infinite alternate;
-    }
-    .face4 {
-      border-bottom-color: rgba(170, 128, 255, 0.8);
-      transform: rotateY(0deg) rotateX(-30deg) translateZ(-86px) rotateZ(180deg);
-      animation: liquidChrome 9s infinite alternate-reverse;
-    }
-    .face5 {
-      border-bottom-color: rgba(0, 255, 255, 0.8);
-      transform: rotateY(120deg) rotateX(-30deg) translateZ(-86px) rotateZ(180deg);
-      animation: liquidChrome 6.5s infinite alternate;
-    }
-    .face6 {
-      border-bottom-color: rgba(255, 0, 255, 0.8);
-      transform: rotateY(240deg) rotateX(-30deg) translateZ(-86px) rotateZ(180deg);
-      animation: liquidChrome 7.5s infinite alternate-reverse;
-    }
-
-    /* inner core – a smaller icosphere */
-    .core {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 60px;
-      height: 60px;
-      background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(0,255,255,0.5) 50%, transparent 80%);
-      border-radius: 50%;
-      transform: translate(-50%, -50%) translateZ(30px);
-      box-shadow: 0 0 80px cyan, 0 0 120px magenta;
-      animation: corePulse 3s infinite alternate;
-    }
-
-    @keyframes polyhedronRotate {
-      0% { transform: translate(-50%, -50%) rotateX(0deg) rotateY(0deg) rotateZ(0deg); }
-      25% { transform: translate(-50%, -50%) rotateX(30deg) rotateY(45deg) rotateZ(20deg); }
-      50% { transform: translate(-50%, -50%) rotateX(60deg) rotateY(90deg) rotateZ(40deg); }
-      75% { transform: translate(-50%, -50%) rotateX(120deg) rotateY(135deg) rotateZ(60deg); }
-      100% { transform: translate(-50%, -50%) rotateX(360deg) rotateY(360deg) rotateZ(360deg); }
-    }
-
-    @keyframes liquidChrome {
-      0% { filter: blur(2px) hue-rotate(0deg); opacity: 0.6; border-bottom-color: cyan; }
-      50% { filter: blur(4px) hue-rotate(90deg); opacity: 0.9; border-bottom-color: magenta; }
-      100% { filter: blur(1px) hue-rotate(180deg); opacity: 0.7; border-bottom-color: yellow; }
-    }
-
-    @keyframes corePulse {
-      0% { box-shadow: 0 0 60px cyan, 0 0 100px magenta; transform: translate(-50%, -50%) translateZ(30px) scale(1); }
-      100% { box-shadow: 0 0 100px cyan, 0 0 200px magenta; transform: translate(-50%, -50%) translateZ(30px) scale(1.3); }
-    }
-
-    /* ------------------------------
-    # NEURAL NETWORK OVERLAY – THOUSANDS OF DATA PARTICLES
-    # (using box-shadow to generate many dots)
-    ------------------------------ */
-    .neural-net {
-      position: absolute;
-      inset: 0;
-      z-index: 5;
-      pointer-events: none;
-      opacity: 0.8;
-    }
-
-    .particle-field {
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      background: transparent;
-      box-shadow: 
-        10px 20px 0 2px rgba(0,255,255,0.6),
-        30px 80px 0 3px rgba(255,0,255,0.5),
-        70px 150px 0 1px rgba(255,255,0,0.7),
-        120px 40px 0 4px cyan,
-        200px 300px 0 2px magenta,
-        350px 120px 0 3px yellow,
-        500px 600px 0 1px white,
-        700px 200px 0 2px #ff00ff,
-        900px 400px 0 3px cyan,
-        150px 700px 0 2px magenta,
-        250px 550px 0 1px cyan,
-        400px 800px 0 4px magenta,
-        550px 250px 0 2px yellow,
-        680px 720px 0 3px cyan,
-        820px 150px 0 1px #ff99ff,
-        950px 880px 0 2px #00ffff,
-        110px 940px 0 3px magenta,
-        270px 430px 0 2px cyan,
-        490px 670px 0 1px magenta,
-        610px 340px 0 4px yellow,
-        770px 910px 0 2px cyan,
-        890px 520px 0 1px magenta,
-        130px 270px 0 3px cyan,
-        360px 180px 0 2px magenta,
-        580px 790px 0 1px yellow,
-        640px 60px 0 4px cyan,
-        730px 480px 0 2px magenta,
-        850px 630px 0 3px cyan,
-        970px 750px 0 1px white,
-        190px 390px 0 2px cyan;
-      animation: particleGlow 4s infinite alternate;
-    }
-
-    /* we can't generate thousands manually, but we'll duplicate and use multiple layers with different offsets */
-    .particle-field2 {
-      composes: particle-field; /* not supported, but we'll just duplicate */
-      position: absolute;
-      width: 100%;
-      height: 100%;
-      box-shadow: 
-        5px 95px 0 1px cyan,
-        45px 235px 0 2px magenta,
-        88px 342px 0 3px yellow,
-        125px 568px 0 1px cyan,
-        213px 724px 0 2px magenta,
-        307px 183px 0 3px cyan,
-        429px 496px 0 1px magenta,
-        518px 627px 0 2px yellow,
-        632px 84px 0 3px cyan,
-        741px 359px 0 1px magenta,
-        829px 513px 0 2px cyan,
-        903px 778px 0 3px magenta,
-        147px 819px 0 1px yellow,
-        264px 117px 0 2px cyan,
-        378px 654px 0 3px magenta,
-        482px 271px 0 1px cyan,
-        595px 422px 0 2px magenta,
-        689px 587px 0 3px yellow,
-        756px 93px 0 1px cyan,
-        834px 445px 0 2px magenta,
-        912px 226px 0 3px cyan,
-        55px 674px 0 1px magenta,
-        173px 856px 0 2px yellow,
-        296px 39px 0 3px cyan,
-        388px 701px 0 1px magenta,
-        477px 922px 0 2px cyan,
-        569px 158px 0 3px magenta,
-        644px 824px 0 1px yellow,
-        718px 478px 0 2px cyan,
-        799px 627px 0 3px magenta,
-        877px 367px 0 1px cyan,
-        943px 505px 0 2px magenta,
-        28px 148px 0 3px yellow,
-        117px 993px 0 1px cyan,
-        202px 322px 0 2px magenta,
-        333px 755px 0 3px cyan,
-        409px 609px 0 1px magenta,
-        521px 86px 0 2px yellow,
-        615px 473px 0 3px cyan,
-        738px 258px 0 1px magenta,
-        827px 689px 0 2px cyan,
-        919px 332px 0 3px magenta,
-        69px 437px 0 1px yellow,
-        184px 584px 0 2px cyan,
-        279px 928px 0 3px magenta,
-        371px 162px 0 1px cyan,
-        462px 716px 0 2px magenta,
-        553px 895px 0 3px yellow,
-        647px 72px 0 1px cyan,
-        731px 539px 0 2px magenta,
-        814px 413px 0 3px cyan,
-        902px 678px 0 1px magenta,
-        98px 262px 0 2px yellow,
-        186px 857px 0 3px cyan,
-        275px 477px 0 1px magenta,
-        368px 618px 0 2px cyan,
-        459px 337px 0 3px magenta,
-        551px 194px 0 1px yellow,
-        643px 964px 0 2px cyan,
-        736px 521px 0 3px magenta,
-        828px 782px 0 1px cyan,
-        918px 405px 0 2px magenta,
-        57px 857px 0 3px yellow;
-      animation: particleGlow2 5s infinite alternate-reverse;
-    }
-
-    @keyframes particleGlow {
-      0% { opacity: 0.3; filter: blur(0px); }
-      100% { opacity: 1; filter: blur(2px); }
-    }
-
-    @keyframes particleGlow2 {
-      0% { opacity: 0.5; filter: blur(1px); }
-      100% { opacity: 0.8; filter: blur(3px); }
-    }
-
-    /* ------------------------------
-    # MAIN CONTENT – GLASS-REFRACTION TEXT
-    # with mix-blend-mode: exclusion
-    ------------------------------ */
-    .content {
-      position: absolute;
-      z-index: 20;
-      bottom: 15%;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      pointer-events: none;
-    }
-
-    .title {
-      font-size: clamp(3rem, 15vw, 5rem);
-      font-weight: 900;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      background: linear-gradient(45deg, cyan, magenta, yellow, cyan);
-      -webkit-background-clip: text;
-      background-clip: text;
-      color: transparent;
-      mix-blend-mode: exclusion;
-      animation: textWarp 10s infinite alternate cubic-bezier(0.86, 0, 0.07, 1);
-      text-shadow: 0 0 30px rgba(0,255,255,0.5);
-      position: relative;
-    }
-
-    .subtitle {
-      font-size: 1rem;
-      font-weight: 300;
-      letter-spacing: 0.5em;
-      mix-blend-mode: exclusion;
-      color: rgba(255,255,255,0.8);
-      animation: textFade 4s infinite alternate;
-    }
-
-    @keyframes textWarp {
-      0% { transform: perspective(400px) rotateX(0deg) skew(0deg); filter: blur(0px); }
-      50% { transform: perspective(400px) rotateX(10deg) skew(5deg); filter: blur(1px); }
-      100% { transform: perspective(400px) rotateX(-10deg) skew(-5deg); filter: blur(0px); }
-    }
-
-    @keyframes textFade {
-      0% { opacity: 0.3; }
-      100% { opacity: 1; }
-    }
-
-    /* ------------------------------
-    # BLACK HOLE BUTTON – implodes on touch
-    ------------------------------ */
-    .button-container {
-      position: absolute;
-      bottom: 5%;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 30;
-      pointer-events: auto;
-    }
-
-    .singularity-btn {
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(20px);
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      color: white;
-      font-size: 1.4rem;
-      font-weight: 600;
-      padding: 18px 60px;
-      border-radius: 60px;
-      cursor: pointer;
-      transition: all 0.2s;
-      text-transform: uppercase;
-      letter-spacing: 4px;
-      box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
-      position: relative;
-      overflow: hidden;
-      outline: none;
-      border-image: linear-gradient(145deg, cyan, magenta) 1;
-      animation: btnFloat 3s infinite alternate cubic-bezier(0.45, 0.05, 0.2, 0.99);
-    }
-
-    /* black hole effect on active (touch) */
-    .singularity-btn:active {
-      transform: scale(0.8);
-      box-shadow: 0 0 0 10px rgba(0,0,0,0.8), 0 0 0 20px rgba(0,255,255,0.2), 0 0 0 30px rgba(255,0,255,0.1);
-      transition: all 1.5s cubic-bezier(0.19, 1, 0.22, 1);
-      border-color: transparent;
-      color: transparent;
-      text-shadow: 0 0 20px black;
-      background: black;
-    }
-
-    /* implosion ring */
-    .singularity-btn::after {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 0;
-      height: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,255,255,0.8) 0%, rgba(0,0,0,0.9) 70%);
-      transform: translate(-50%, -50%);
-      transition: width 0.8s ease-out, height 0.8s ease-out, opacity 0.8s;
-      opacity: 0;
-      z-index: -1;
-    }
-
-    .singularity-btn:active::after {
-      width: 400px;
-      height: 400px;
-      opacity: 1;
-      transition: width 1.2s cubic-bezier(0, 0.9, 0.3, 1.2), height 1.2s cubic-bezier(0, 0.9, 0.3, 1.2);
-    }
-
-    /* gravity ripple effect */
-    .singularity-btn::before {
-      content: '';
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      width: 100%;
-      height: 100%;
-      border-radius: 50%;
-      background: transparent;
-      box-shadow: 0 0 50px 10px rgba(0,255,255,0.5);
-      transform: translate(-50%, -50%) scale(0);
-      transition: transform 0.5s;
-    }
-
-    .singularity-btn:hover::before {
-      transform: translate(-50%, -50%) scale(1.5);
-    }
-
-    @keyframes btnFloat {
-      0% { transform: translateY(0) scale(1); }
-      100% { transform: translateY(-10px) scale(1.05); }
-    }
-
-    /* ------------------------------
-    # RESPONSIVE FIXES
-    ------------------------------ */
-    @media (max-width: 400px) {
-      .geometry-container { width: 200px; height: 200px; }
-      .face { border-left: 70px solid transparent; border-right: 70px solid transparent; border-bottom: 121px solid; }
-      .title { font-size: 2.8rem; }
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Mind-Blowing 3D Cinematic Intro</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            font-family: 'Arial Black', sans-serif;
+            background-color: black;
+        }
+        #info {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            color: rgba(255,215,0,0.5);
+            font-size: 12px;
+            letter-spacing: 2px;
+            z-index: 100;
+            pointer-events: none;
+            mix-blend-mode: exclusion;
+        }
+        /* Fallback for older browsers */
+        .no-blend {
+            color: gold;
+        }
+    </style>
 </head>
 <body>
-  <!-- 4D SPACE-TIME WARP (5 gradient layers) -->
-  <div class="warp-field">
-    <div class="warp-layer-1"></div>
-    <div class="warp-layer-2"></div>
-    <div class="warp-layer-3"></div>
-    <div class="warp-layer-4"></div>
-    <div class="warp-layer-5"></div>
-  </div>
+    <div id="info">TOUCH THE GOLD • WARP SPEED</div>
 
-  <!-- NEURAL NET PARTICLES (thousands via box-shadows) -->
-  <div class="neural-net">
-    <div class="particle-field"></div>
-    <div class="particle-field2"></div>
-  </div>
+    <!-- Import Three.js core and required add-ons from CDN -->
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.128.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.128.0/examples/jsm/"
+            }
+        }
+    </script>
 
-  <!-- IMPOSSIBLE GEOMETRY – SACRED POLYHEDRON -->
-  <div class="geometry-container">
-    <div class="face face1"></div>
-    <div class="face face2"></div>
-    <div class="face face3"></div>
-    <div class="face face4"></div>
-    <div class="face face5"></div>
-    <div class="face face6"></div>
-    <div class="core"></div>
-  </div>
+    <script type="module">
+        import * as THREE from 'three';
+        import { OrbitControls } from 'three/addons/controls/OrbitControls.js';
+        import { EffectComposer } from 'three/addons/postprocessing/EffectComposer.js';
+        import { RenderPass } from 'three/addons/postprocessing/RenderPass.js';
+        import { UnrealBloomPass } from 'three/addons/postprocessing/UnrealBloomPass.js';
+        import { TextGeometry } from 'three/addons/geometries/TextGeometry.js';
+        import { FontLoader } from 'three/addons/loaders/FontLoader.js';
 
-  <!-- GLASS-REFRACTION TYPOGRAPHY -->
-  <div class="content">
-    <div class="title">SINGULARITY</div>
-    <div class="subtitle">BEYOND THE EVENT HORIZON</div>
-  </div>
+        // --- SCENE SETUP ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x050510);
+        scene.fog = new THREE.FogExp2(0x050510, 0.0015); // subtle depth
 
-  <!-- BLACK HOLE BUTTON (implodes on touch) -->
-  <div class="button-container">
-    <button class="singularity-btn">ENTER VOID</button>
-  </div>
+        const camera = new THREE.PerspectiveCamera(45, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera.position.set(0, 2, 18);
+        
+        const renderer = new THREE.WebGLRenderer({ antialias: true, powerPreference: "high-performance" });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2)); // limit for mobile performance
+        renderer.toneMapping = THREE.ReinhardToneMapping;
+        renderer.toneMappingExposure = 1.2;
+        document.body.appendChild(renderer.domElement);
 
-  <!-- no JavaScript needed, pure CSS madness -->
+        // --- POST PROCESSING (Bloom for cinematic glow) ---
+        const renderScene = new RenderPass(scene, camera);
+        const bloomPass = new UnrealBloomPass(new THREE.Vector2(window.innerWidth, window.innerHeight), 1.5, 0.4, 0.85);
+        bloomPass.threshold = 0.1;
+        bloomPass.strength = 1.2;
+        bloomPass.radius = 0.5;
+
+        const composer = new EffectComposer(renderer);
+        composer.addPass(renderScene);
+        composer.addPass(bloomPass);
+
+        // --- LIGHTS (Cinematic rim and fill) ---
+        // Ambient base
+        const ambient = new THREE.AmbientLight(0x404060);
+        scene.add(ambient);
+
+        // Key light (warm)
+        const keyLight = new THREE.PointLight(0xffaa33, 1, 30);
+        keyLight.position.set(5, 5, 5);
+        scene.add(keyLight);
+
+        // Rim light (cool backlight)
+        const rimLight = new THREE.PointLight(0x4466ff, 1.5, 30);
+        rimLight.position.set(-5, 0, -10);
+        scene.add(rimLight);
+
+        // Fill light for gold
+        const fillLight = new THREE.PointLight(0xffdd99, 0.8, 20);
+        fillLight.position.set(2, 3, 5);
+        scene.add(fillLight);
+
+        // Additional moving light for liquid effect
+        const movingLight = new THREE.PointLight(0xffaa00, 1, 20);
+        scene.add(movingLight);
+
+        // --- CENTRAL FLOATING LIQUID GOLD ORB ---
+        const orbGroup = new THREE.Group();
+        
+        // Main gold sphere with physical material for metallic look
+        const goldMaterial = new THREE.MeshPhysicalMaterial({
+            color: 0xffaa22,
+            emissive: 0x442200,
+            metalness: 0.95,
+            roughness: 0.25,
+            clearcoat: 1.0,
+            clearcoatRoughness: 0.1,
+            reflectivity: 1,
+            emissiveIntensity: 0.8
+        });
+        
+        const orbGeo = new THREE.SphereGeometry(1.2, 64, 64);
+        const orbMesh = new THREE.Mesh(orbGeo, goldMaterial);
+        orbGroup.add(orbMesh);
+
+        // Inner glow sphere (for bloom boost)
+        const innerGlowGeo = new THREE.SphereGeometry(1.0, 32, 32);
+        const innerGlowMat = new THREE.MeshBasicMaterial({
+            color: 0xffaa33,
+            transparent: true,
+            opacity: 0.15,
+            blending: THREE.AdditiveBlending
+        });
+        const innerGlow = new THREE.Mesh(innerGlowGeo, innerGlowMat);
+        orbGroup.add(innerGlow);
+
+        // Tiny orbiting particles around the orb (liquid bubbles)
+        const bubbleParticles = new THREE.BufferGeometry();
+        const bubbleCount = 80;
+        const bubblePositions = new Float32Array(bubbleCount * 3);
+        for (let i = 0; i < bubbleCount; i++) {
+            const theta = Math.random() * Math.PI * 2;
+            const phi = Math.acos((Math.random() * 2) - 1);
+            const r = 1.8 + Math.random() * 0.5;
+            bubblePositions[i*3] = Math.sin(phi) * Math.cos(theta) * r;
+            bubblePositions[i*3+1] = Math.sin(phi) * Math.sin(theta) * r;
+            bubblePositions[i*3+2] = Math.cos(phi) * r;
+        }
+        bubbleParticles.setAttribute('position', new THREE.BufferAttribute(bubblePositions, 3));
+        const bubbleMat = new THREE.PointsMaterial({
+            color: 0xffaa33,
+            size: 0.05,
+            transparent: true,
+            blending: THREE.AdditiveBlending
+        });
+        const bubbles = new THREE.Points(bubbleParticles, bubbleMat);
+        orbGroup.add(bubbles);
+
+        scene.add(orbGroup);
+
+        // --- PARTICLE SYSTEM (Stars / Warp speed) ---
+        const particleCount = 2500;
+        const particles = new THREE.BufferGeometry();
+        const posArray = new Float32Array(particleCount * 3);
+        const speedArray = new Float32Array(particleCount); // for z velocity
+
+        for (let i = 0; i < particleCount; i++) {
+            // Spread in a cylinder shape
+            const radius = 15 + Math.random() * 20; // wide area
+            const angle = Math.random() * Math.PI * 2;
+            const x = Math.cos(angle) * radius * (0.5 + Math.random() * 0.5);
+            const y = (Math.random() - 0.5) * 10;
+            const z = -50 + Math.random() * 80; // spread in depth
+            
+            posArray[i*3] = x;
+            posArray[i*3+1] = y;
+            posArray[i*3+2] = z;
+            
+            speedArray[i] = 0.02 + Math.random() * 0.06; // speed factor
+        }
+        
+        particles.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+        particles.setAttribute('speed', new THREE.BufferAttribute(speedArray, 1));
+        
+        // Create star texture
+        const canvas = document.createElement('canvas');
+        canvas.width = 32;
+        canvas.height = 32;
+        const ctx = canvas.getContext('2d');
+        ctx.fillStyle = 'white';
+        ctx.arc(16, 16, 8, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.globalCompositeOperation = 'source-atop';
+        ctx.fillStyle = 'rgba(255,255,255,0.8)';
+        ctx.arc(16, 16, 4, 0, Math.PI * 2);
+        ctx.fill();
+        
+        const starTexture = new THREE.CanvasTexture(canvas);
+        
+        const particleMaterial = new THREE.PointsMaterial({
+            color: 0xffffff,
+            size: 0.25,
+            map: starTexture,
+            transparent: true,
+            blending: THREE.AdditiveBlending,
+            depthWrite: false
+        });
+        
+        const particleSystem = new THREE.Points(particles, particleMaterial);
+        scene.add(particleSystem);
+
+        // Background galaxy spiral (static but rotating)
+        const galaxyGeo = new THREE.BufferGeometry();
+        const galaxyCount = 800;
+        const galaxyPos = new Float32Array(galaxyCount * 3);
+        for (let i = 0; i < galaxyCount; i++) {
+            const r = 20 + Math.random() * 40;
+            const angle = (i % 2 === 0 ? 1 : -1) * r * 0.3 + Math.random() * 0.5;
+            const x = Math.cos(angle) * r;
+            const z = Math.sin(angle) * r;
+            const y = (Math.random() - 0.5) * 5;
+            galaxyPos[i*3] = x;
+            galaxyPos[i*3+1] = y;
+            galaxyPos[i*3+2] = z;
+        }
+        galaxyGeo.setAttribute('position', new THREE.BufferAttribute(galaxyPos, 3));
+        const galaxyMat = new THREE.PointsMaterial({ color: 0x88aaff, size: 0.4, blending: THREE.AdditiveBlending, transparent: true, opacity: 0.6 });
+        const galaxyPoints = new THREE.Points(galaxyGeo, galaxyMat);
+        scene.add(galaxyPoints);
+
+        // --- 3D TEXT WITH MIRROR REFLECTION ---
+        const fontLoader = new FontLoader();
+        // Use Helvetiker from Three.js examples (external but widely available)
+        fontLoader.load('https://threejs.org/examples/fonts/helvetiker_regular.typeface.json', function(font) {
+            const textGeo = new TextGeometry('INFINITY', {
+                font: font,
+                size: 2.5,
+                height: 0.4,
+                curveSegments: 6,
+                bevelEnabled: true,
+                bevelThickness: 0.05,
+                bevelSize: 0.03,
+                bevelOffset: 0,
+                bevelSegments: 4
+            });
+            
+            // Center the text
+            textGeo.computeBoundingBox();
+            const box = textGeo.boundingBox;
+            const centerX = (box.max.x + box.min.x) / 2;
+            const centerY = (box.max.y + box.min.y) / 2;
+            const centerZ = (box.max.z + box.min.z) / 2;
+            
+            // Main text material with blending to look part of nebula
+            const textMaterial = new THREE.MeshStandardMaterial({
+                color: 0xffdd99,
+                emissive: 0x442200,
+                roughness: 0.3,
+                metalness: 0.7,
+                emissiveIntensity: 1.2,
+                transparent: true,
+                blending: THREE.CustomBlending,
+                blendSrc: THREE.SrcAlphaFactor,
+                blendDst: THREE.OneFactor,
+                blendEquation: THREE.AddEquation
+            });
+            
+            const textMesh = new THREE.Mesh(textGeo, textMaterial);
+            textMesh.position.set(-centerX, 3.5, -5); // place in front but slightly back
+            scene.add(textMesh);
+
+            // Reflection (mirror) - duplicate with inverted Y scale and gradient opacity
+            const reflectMat = new THREE.MeshStandardMaterial({
+                color: 0xffdd99,
+                emissive: 0x221100,
+                roughness: 0.5,
+                metalness: 0.3,
+                transparent: true,
+                opacity: 0.25,
+                blending: THREE.AdditiveBlending
+            });
+            
+            const reflectMesh = new THREE.Mesh(textGeo, reflectMat);
+            reflectMesh.position.copy(textMesh.position);
+            reflectMesh.position.y -= 1.8; // adjust for reflection offset
+            reflectMesh.scale.set(1, -1, 1); // flip vertically
+            reflectMesh.position.y -= 0.2; // fine-tune
+            scene.add(reflectMesh);
+
+            // Add a subtle glow plane under text
+            const glowPlaneGeo = new THREE.PlaneGeometry(12, 3);
+            const glowPlaneMat = new THREE.MeshBasicMaterial({
+                color: 0xaa88ff,
+                transparent: true,
+                opacity: 0.1,
+                blending: THREE.AdditiveBlending,
+                side: THREE.DoubleSide
+            });
+            const glowPlane = new THREE.Mesh(glowPlaneGeo, glowPlaneMat);
+            glowPlane.position.set(textMesh.position.x, textMesh.position.y - 1.2, textMesh.position.z + 0.5);
+            glowPlane.rotation.x = Math.PI / 2;
+            scene.add(glowPlane);
+        });
+
+        // --- TOUCH INTERACTION (Orb reacts) ---
+        let targetOrbRotationX = 0;
+        let targetOrbRotationY = 0;
+        let currentOrbRotationX = 0;
+        let currentOrbRotationY = 0;
+
+        window.addEventListener('touchmove', (e) => {
+            e.preventDefault();
+            const touch = e.touches[0];
+            const x = (touch.clientX / window.innerWidth) * 2 - 1;
+            const y = -(touch.clientY / window.innerHeight) * 2 + 1;
+            
+            targetOrbRotationY = x * Math.PI * 0.5;
+            targetOrbRotationX = y * Math.PI * 0.3;
+            
+            // Also move the moving light
+            movingLight.position.set(x * 5, y * 3 + 2, 5);
+        }, { passive: false });
+
+        window.addEventListener('touchstart', (e) => {
+            // Slight pulse on touch
+            orbGroup.scale.set(1.1, 1.1, 1.1);
+            setTimeout(() => {
+                orbGroup.scale.set(1, 1, 1);
+            }, 200);
+        });
+
+        // --- CAMERA SHAKE on load ---
+        let shakeTime = 1.0; // seconds
+        const originalCamPos = camera.position.clone();
+
+        // --- ANIMATION LOOP ---
+        let clock = new THREE.Clock();
+
+        function animate() {
+            const delta = clock.getDelta();
+            const elapsedTime = performance.now() / 1000;
+
+            // Camera shake (easing out)
+            if (shakeTime > 0) {
+                shakeTime -= delta * 0.5;
+                const intensity = shakeTime * 0.3;
+                camera.position.x = originalCamPos.x + Math.sin(elapsedTime * 50) * intensity;
+                camera.position.y = originalCamPos.y + Math.cos(elapsedTime * 40) * intensity;
+                camera.position.z = originalCamPos.z + Math.sin(elapsedTime * 30) * intensity;
+                camera.lookAt(0, 1, 0);
+            } else {
+                // Smooth return
+                camera.position.lerp(originalCamPos, 0.05);
+                camera.lookAt(0, 1, 0);
+            }
+
+            // Orb floating animation (organic easing)
+            orbGroup.position.y = Math.sin(elapsedTime * 1.5) * 0.3;
+            orbGroup.rotation.z = Math.sin(elapsedTime * 0.7) * 0.1;
+            
+            // Smooth rotation based on touch
+            currentOrbRotationX += (targetOrbRotationX - currentOrbRotationX) * 0.08;
+            currentOrbRotationY += (targetOrbRotationY - currentOrbRotationY) * 0.08;
+            orbGroup.rotation.x = currentOrbRotationX;
+            orbGroup.rotation.y = currentOrbRotationY;
+
+            // Rotate bubbles around orb
+            bubbles.rotation.y += 0.005;
+            bubbles.rotation.x += 0.002;
+
+            // Moving light around orb for liquid shimmer
+            movingLight.position.x = Math.sin(elapsedTime * 2) * 4;
+            movingLight.position.y = Math.cos(elapsedTime * 1.3) * 3 + 1;
+            movingLight.position.z = Math.sin(elapsedTime * 1.8) * 4;
+
+            // Warp speed particles: move towards camera (positive Z) and reset
+            const positions = particleSystem.geometry.attributes.position.array;
+            const speeds = particleSystem.geometry.attributes.speed.array;
+            for (let i = 0; i < particleCount; i++) {
+                // Move forward
+                positions[i*3+2] += speeds[i] * 0.5; // speed adjusted
+                
+                // Reset if past camera
+                if (positions[i*3+2] > 30) {
+                    positions[i*3] = (Math.random() - 0.5) * 40;
+                    positions[i*3+1] = (Math.random() - 0.5) * 20;
+                    positions[i*3+2] = -80 + Math.random() * -20;
+                }
+            }
+            particleSystem.geometry.attributes.position.needsUpdate = true;
+
+            // Rotate background galaxy slowly
+            galaxyPoints.rotation.y += 0.0002;
+            galaxyPoints.rotation.x += 0.0001;
+
+            // Render via composer for bloom
+            composer.render();
+
+            requestAnimationFrame(animate);
+        }
+
+        animate();
+
+        // --- RESIZE HANDLER ---
+        window.addEventListener('resize', onWindowResize, false);
+        function onWindowResize() {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            composer.setSize(window.innerWidth, window.innerHeight);
+        }
+
+        // Disable context menu for cleaner interaction
+        window.addEventListener('contextmenu', e => e.preventDefault());
+
+        // Additional small stars for depth (static)
+        const distantStarsGeo = new THREE.BufferGeometry();
+        const distantCount = 800;
+        const distantPos = new Float32Array(distantCount * 3);
+        for (let i = 0; i < distantCount; i++) {
+            distantPos[i*3] = (Math.random() - 0.5) * 200;
+            distantPos[i*3+1] = (Math.random() - 0.5) * 200;
+            distantPos[i*3+2] = (Math.random() - 0.5) * 200 - 100;
+        }
+        distantStarsGeo.setAttribute('position', new THREE.BufferAttribute(distantPos, 3));
+        const distantStarsMat = new THREE.PointsMaterial({ color: 0x88aadd, size: 0.15, blending: THREE.AdditiveBlending });
+        const distantStars = new THREE.Points(distantStarsGeo, distantStarsMat);
+        scene.add(distantStars);
+
+        console.log('Mind-Blowing Intro Loaded');
+    </script>
 </body>
 </html>
